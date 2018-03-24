@@ -2,6 +2,7 @@ var express         = require("express"),
     app             = express(),
     bodyParser      = require("body-parser"),
     mongoose        = require("mongoose"),
+    moment          = require("moment"),
     flash           = require("connect-flash"),
     passport        = require("passport"),
     LocalStrategy   = require("passport-local"),
@@ -17,9 +18,9 @@ var campgroundRoutes    = require("./routes/campgrounds"),
     indexRoutes         = require("./routes/index");
     
     
-// mongoose.connect("mongodb://localhost/yelp_camp_v12deployed");
+mongoose.connect("mongodb://localhost/date");
 // mongoose.connect("mongodb://matt:domino@ds215709.mlab.com:15709/yelp_camp");
-mongoose.connect(process.env.DATABASEURL);
+// mongoose.connect(process.env.DATABASEURL);
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");

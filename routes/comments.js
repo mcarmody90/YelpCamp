@@ -1,4 +1,5 @@
 var express = require("express");
+var moment = require("moment-timezone");
 var router = express.Router({mergeParams: true});
 var Campground = require("../models/campground");
 var Comment = require("../models/comment");
@@ -31,6 +32,9 @@ router.post("/", middleware.isLoggedIn, function(req, res){
                     console.log(err);
                 } else {
                     //add username and id to comment
+                    moment.tz.setDefault("America/Matamoros");
+                    comment.dateShow = moment().calendar(); 
+                    comment.date = new Date().getTime();
                     comment.author.id = req.user._id;
                     comment.author.username = req.user.username;
                     //save comment
