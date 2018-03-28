@@ -33,10 +33,11 @@ router.post("/", middleware.isLoggedIn, function(req, res){
                 } else {
                     //add username and id to comment
                     moment.tz.setDefault("America/Matamoros");
-                    comment.dateShow = moment().calendar(); 
+                    comment.dateMade = moment().format('MMMM Do YYYY, h:mm:ss a');
                     comment.date = new Date().getTime();
                     comment.author.id = req.user._id;
                     comment.author.username = req.user.username;
+                    comment.author.avatar = req.user.avatar;
                     //save comment
                     comment.save();
                     //connect new comment to campground
@@ -44,7 +45,7 @@ router.post("/", middleware.isLoggedIn, function(req, res){
                     campground.save();
                     // console.log(comment);
                     //redirect campground show page
-                    req.flash("success", "Successfully added comment.")
+                    req.flash("success", "Successfully added comment.");
                     res.redirect("/campgrounds/" + campground._id);
                 }
             });

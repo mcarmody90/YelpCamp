@@ -7,7 +7,8 @@ var UserSchema = new mongoose.Schema({
     avatar: String, //add default later
     firstName: String,
     lastName: String,
-    email: String
+    email: String,
+    about: String
 });
 
 UserSchema.plugin(passportLocalMongoose); // takes the wheel and adds in methods to our user.

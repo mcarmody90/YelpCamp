@@ -18,7 +18,7 @@
                     <h4><a><%= campground.name %></a></h4> <!-- will link to park service page to book -->
                     <p><%= campground.description %></p>
                     <p>
-                        <em>Submitted by <a href="/users/<%= campground.author.id %>"><%= campground.author.username %></a></em>
+                        <em>Submitted by <a href="/users/<%= campground.author.id %>"><%= campground.author.username %></a> <%= campground.dateMade %></em>
                     </p>
                     <% if(currentUser && campground.author.id.equals(currentUser._id)){ %>
                         <a class="btn btn-warning" href="/campgrounds/<%= campground._id %>/edit">Edit</a>
@@ -35,12 +35,12 @@
                 <hr />
                 <% campground.comments.forEach(function(comment){ %>
                     <div class="row">
-                        <div class="col-md-12">
+                        <div class="show-comment col-md-12"><!-- ADD COLLAPSE HERE -->
+                            <img style="border: 1px solid grey; height: 50px; width: 50px" class="comment-img" src="<%= comment.author.avatar %>" />
+                            <% console.log(comment.author); %>
                             <strong><a href="/users/<%= comment.author.id %>"><%= comment.author.username %></strong></a>
-                            <span class="pull-right"><%= comment.dateShow %></span>
-                            <% console.log("Current date:                     " + new Date().getTime()); %>
-                            <% console.log("The comment was created on:       " + (Number(comment.date))); %>
-                            <% console.log("The Comment date plus 60,0000 is: " + (Number(comment.date) + 60000)); %>
+                            <% moment.tz.setDefault("America/Matamoros"); %>
+                            <span class="pull-right"><%= moment(comment.dateMade, 'MMMM Do YYYY, h:mm:ss a').fromNow(); %></span>
                             <p>
                                 <%= comment.text %>
                                 <% if((Number(comment.date) + 60000) <= new Date().getTime() ){ %>

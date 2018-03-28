@@ -3,6 +3,7 @@ var mongoose = require("mongoose");
 // create schema, comments have text and author
 var commentSchema = mongoose.Schema({
     text: String,
+    dateMade: String,
     dateShow: String,
     date: String,
     author: {
@@ -10,7 +11,8 @@ var commentSchema = mongoose.Schema({
             type: mongoose.Schema.Types.ObjectId,
             ref: "User"
         },
-        username: String
+        username: String,
+        avatar: String
     }
 });
 

@@ -1,0 +1,21 @@
+<% include ../partials/header %>
+<div class="container">
+    <div class="row">
+        <h1 style="text-align: center;">Edit Profile</h1>
+        <div style="width: 40%; margin: 25px auto;">
+            <form action="/users/<%= user.id %>?_method=PUT" method="POST">
+                <div class="form-group">Avatar URL:
+                    <input class="form-control" type="text" name="user[avatar]" value="<%= user.avatar %>">
+                </div>
+                <div class="form-group">About:
+                    <input class="form-control" type="text" name="user[about]" value="<%= user.about %>">
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-lg btn-primary btn-block">Submit</button>
+                </div>
+            </form>
+            <a href="/campgrounds">Back to Campgrounds</a>
+        </div>
+    </div>
+</div>
+<% include ../partials/footer %>

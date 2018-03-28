@@ -1,7 +1,9 @@
 var express = require("express");
 var router = express.Router();
 var Campground = require("../models/campground");
+var moment = require("moment");
 var middleware = require("../middleware");
+
 
 //INDEX - show all campgrounds
 router.get("/", function(req, res){
@@ -26,12 +28,14 @@ router.post("/", middleware.isLoggedIn, function(req, res){
    var name = req.body.name;
    var price = req.body.price;
    var image = req.body.image;
+   moment.tz.setDefault("America/Matamoros");
+   var dateMade = moment().format('MMMM Do YYYY, h:mm:ss a');
    var desc = req.body.description;
    var author = {
        id: req.user._id,
        username: req.user.username
    };
-   var newCampground = {name: name, price: price, image: image, description: desc, author: author};
+   var newCampground = {name: name, price: price, image: image, dateMade: dateMade, description: desc, author: author};
    // Create a new campground and save to DB *
    Campground.create(newCampground, function(err, newlyCreated){
        if(err){
@@ -53,7 +57,7 @@ router.get("/:id", function(req, res){
         } else {
             // console.log(foundCampground);
             //render show template with that campground
-            res.render("campgrounds/show", {campground: foundCampground});
+            res.render("campgrounds/show", {campground: foundCampground, moment: moment});
             //the above passes in our foundCampground under the name campground. Now inside of our show, campground will have the value of whatever we found with the ID.
         }
     });

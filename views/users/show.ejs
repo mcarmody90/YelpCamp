@@ -1,21 +1,50 @@
 <% include ../partials/header %>
 
-<div class="row">
-    <div class="col-md-4">
+<div class="container profile-container">
+    <div class="col-lg-4 profile-left">
         <div class="thumbnail text-center">
             <h1><%= user.firstName + " " + user.lastName %></h1>
-            <img src="<%= user.avatar %>" alt="user profile image" />
+            <img class="profile-image" src="<%= user.avatar %>" alt="user profile image" />
+            <% if(currentUser && user._id.equals(currentUser._id)){ %>
+                <a class="changepic" href="/users/<%= user._id %>/edit">Change profile picture</a>
+            <% } %>
             <div class="caption"><a href="mailto:<%= user.email %>"><%= user.email %></a></a></div>
         </div>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Suscipit minus eveniet perferendis quas sunt nostrum cum aperiam sed eius tempora officiis, reiciendis sapiente quibusdam soluta quod beatae amet ipsam vero.</p>
+        <h1>About</h1>
+        <p id="profile-about"><%= user.about %></p>
+        <h2>Pets</h2>
+            <div class="text-centered">
+                <img src="#" /><br />
+                <strong>Name: </strong><br />
+                <strong>Breed: </strong>
+            </div>
     </div>
-    <div class="col-md-8">
-        <h2><%= user.username %>'s Campgrounds:</h2>
-        <ul>
-            <li><% campgrounds.forEach(function(campground){ %>
-                <a href="/campgrounds/<%= campground.id %>"><%= campground.name %></a>
-            <% }); %></li>
-        </ul>
+    <div class="col-lg-7 profile-right">
+        <div class="campground-container">
+            <h2><%= user.username %>'s Campgrounds:</h2>
+                <% campgrounds.forEach(function(campground){ %>
+                    <div>
+                        <div class="campground-div">
+                            <div class="minicg profile-img pull-left" style="background-image: url('<%= campground.image %>')"></div>
+                            <a href="/campgrounds/<%= campground.id %>"><%= campground.name %></a><br />
+                            <span><%= campground.dateMade %></span>
+                        </div>
+                    </div>
+                <% }); %>
+        </div>
+        <div class="row separator"></div>
+        <div class="comment-container">
+            <h2><%= user.username %>'s Comments:</h2>
+            <div>
+                <% comments.forEach(function(comment){ %>
+                    <div class="comment-div">
+                        <em><strong><%= comment.dateMade %></strong></em>
+                        <!-- <a href="/comments/<%= comment.id %>"><%= comment.text %></a> -->
+                        <p><%= comment.text %></p>
+                    </div>
+                <% }); %>
+            </div>
+        </div>
     </div>
 </div>
 
