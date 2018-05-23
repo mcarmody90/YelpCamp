@@ -68,7 +68,7 @@ middlewareObj.checkProfileOwnership = function(req, res, next){
                 if(foundUser._id.equals(req.user._id)){
                     next();
                 } else {
-                    req.flash("error", "You do not have permission to do that, Bucko!");
+                    req.flash("error", "You do not have permission to do that.");
                     res.redirect("back");
                 }
             }

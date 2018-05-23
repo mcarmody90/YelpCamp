@@ -22,6 +22,9 @@
     <div class="col-lg-7 profile-right">
         <div class="campground-container">
             <h2><%= user.username %>'s Campgrounds:</h2>
+            <% if(campgrounds <= 0) { %>
+                <p>This user has not submitted any campgrounds.</p>
+            <% } else { %>
                 <% campgrounds.forEach(function(campground){ %>
                     <div>
                         <div class="campground-div">
@@ -31,19 +34,24 @@
                         </div>
                     </div>
                 <% }); %>
+            <% } %>
         </div>
         <div class="row separator"></div>
         <div class="comment-container">
             <h2><%= user.username %>'s Comments:</h2>
-            <div>
-                <% comments.forEach(function(comment){ %>
-                    <div class="comment-div">
-                        <em><strong><%= comment.dateMade %></strong></em>
-                        <!-- <a href="/comments/<%= comment.id %>"><%= comment.text %></a> -->
-                        <p><%= comment.text %></p>
-                    </div>
-                <% }); %>
-            </div>
+            <% if (comments <= 0) { %>
+                <p>This user has not submitted any comments.</p>
+            <% } else { %>
+                <div>
+                    <% comments.forEach(function(comment){ %>
+                        <div class="comment-div">
+                            <em><strong><%= comment.dateMade %></strong></em>
+                            <!-- <a href="/comments/<%= comment.id %>"><%= comment.text %></a> -->
+                            <p><%= comment.text %></p>
+                        </div>
+                    <% }); %>
+                </div>
+            <% } %>
         </div>
     </div>
 </div>

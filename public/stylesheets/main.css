@@ -122,3 +122,10 @@ li {
 .changepic:hover {
     text-decoration: none;
 }
+
+#nav-avatar {
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    margin-top: 5px;
+}

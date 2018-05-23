@@ -37,12 +37,12 @@
                     <div class="row">
                         <div class="show-comment col-md-12"><!-- ADD COLLAPSE HERE -->
                             <img style="border: 1px solid grey; height: 50px; width: 50px" class="comment-img" src="<%= comment.author.avatar %>" />
-                            <% console.log(comment.author); %>
+                            <% // console.log(comment.author); %>
                             <strong><a href="/users/<%= comment.author.id %>"><%= comment.author.username %></strong></a>
                             <% moment.tz.setDefault("America/Matamoros"); %>
                             <span class="pull-right"><%= moment(comment.dateMade, 'MMMM Do YYYY, h:mm:ss a').fromNow(); %></span>
                             <p>
-                                <%= comment.text %>
+                                <%= filter.clean(comment.text); %>
                                 <% if((Number(comment.date) + 60000) <= new Date().getTime() ){ %>
                                 <% } %>
                             </p>

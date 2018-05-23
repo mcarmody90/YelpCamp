@@ -1,5 +1,7 @@
 var express = require("express");
 var moment = require("moment-timezone");
+var Filter = require("bad-words"),
+    filter  = new Filter();
 var router = express.Router({mergeParams: true});
 var Campground = require("../models/campground");
 var Comment = require("../models/comment");
@@ -64,7 +66,7 @@ router.get("/:comment_id/edit", middleware.checkCommentOwnership, function(req, 
             if(err){
                 res.redirect("back");
             } else {
-                res.render("comments/edit", {campground_id: req.params.id, comment: foundComment});
+                res.render("comments/edit", {campground_id: req.params.id, comment: foundComment, avatar: req.user.avatar});
             }
         });
     });
@@ -76,7 +78,14 @@ router.put("/:comment_id", middleware.checkCommentOwnership, function(req, res){
        if(err){
            res.redirect("back");
        } else {
-           res.redirect("/campgrounds/" + req.params.id);
+           Comment.findByIdAndUpdate(req.params.comment_id,
+           {$set: {'author.avatar': req.user.avatar}}, function(err, newComment){
+               if(err){
+                  res.redirect("back");
+               } else {
+                  res.redirect("/campgrounds/" + req.params.id);
+               }
+           });
        }
     });
 });

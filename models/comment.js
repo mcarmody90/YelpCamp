@@ -13,7 +13,13 @@ var commentSchema = mongoose.Schema({
         },
         username: String,
         avatar: String
-    }
+    },
+    comments: [ // comments should be an array of comment IDs
+       {
+           type: mongoose.Schema.Types.ObjectId,
+           ref: "Comment"
+       }
+    ]
 });
 
 module.exports = mongoose.model("Comment", commentSchema);

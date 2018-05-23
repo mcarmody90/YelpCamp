@@ -2,8 +2,9 @@ var express = require("express");
 var router = express.Router();
 var Campground = require("../models/campground");
 var moment = require("moment");
+var Filter = require("bad-words"),
+    filter = new Filter();
 var middleware = require("../middleware");
-
 
 //INDEX - show all campgrounds
 router.get("/", function(req, res){
@@ -39,7 +40,8 @@ router.post("/", middleware.isLoggedIn, function(req, res){
    // Create a new campground and save to DB *
    Campground.create(newCampground, function(err, newlyCreated){
        if(err){
-           console.log(err);
+           req.flash("error", err.message);
+           return res.redirect("back");
        } else {
            // Redirect back to campgrounds page
            res.redirect("/campgrounds");
@@ -57,7 +59,7 @@ router.get("/:id", function(req, res){
         } else {
             // console.log(foundCampground);
             //render show template with that campground
-            res.render("campgrounds/show", {campground: foundCampground, moment: moment});
+            res.render("campgrounds/show", {campground: foundCampground, moment: moment, filter: filter});
             //the above passes in our foundCampground under the name campground. Now inside of our show, campground will have the value of whatever we found with the ID.
         }
     });
